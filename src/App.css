@@ -1,3 +1,7 @@
 .App {
   text-align: center;
+  color: yellow;
+  background-position: top;
+  background-image: url('./assets/vehicle.jpg');
+  background-size: cover;
 }
