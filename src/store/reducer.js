@@ -2,8 +2,12 @@ import * as actionTypes from './actionTypes';
 
 const initialState = {
     characters: [],
+    characterBuffer: [],
+    hasBuffer: false,
+    films: '',
+    characterData: '',
     hasNext: true,
-    nextPage: 1,
+    nextPage: 1
 }
 
 const updateObject = (oldObject, updatedProperties) => {
@@ -22,11 +26,28 @@ const reducer = (state = initialState, action) => {
             })
         case actionTypes.GET_NEXT_CHARACTERS:
             return updateObject(state, {
-                characters: [...state.characters, ...action.characters.results],
+                characters: [...state.characters, ...action.characters.results.slice(0, 5)],
+                characterBuffer: [...action.characters.results.slice(5, 10)],
                 nextPage: state.nextPage + 1,
-                hasNext: action.characters.next ? true : false
+                hasNext: action.characters.next ? true : false,
+                hasBuffer: true
             })
             //TODO: DODAWAL 5 A NIE 10 ELEMENTÓW! 
+        case actionTypes.GET_NEXT_CHARACTERS_FROM_BUFFER:
+            return updateObject(state, {
+                characters:[...state.characters, ...state.characterBuffer],
+                characterBuffer: [],
+                hasBuffer: false
+            })
+        case actionTypes.GET_CHARACTER_DATA:
+            return updateObject(state, {
+                characterData: action.data
+            })
+        case actionTypes.GET_FILMS:
+            return updateObject(state, {
+                films: [...action.films.results]
+            })
+
         default:
             return state;
     }

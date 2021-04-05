@@ -1,7 +1,7 @@
-.App {
+body {
   text-align: center;
   color: yellow;
   background-position: top;
-  background-image: url('./assets/vehicle.jpg');
+  background-image: url('./assets/skynight.jpg');
   background-size: cover;
 }

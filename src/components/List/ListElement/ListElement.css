@@ -1,5 +1,4 @@
 .ListElement {
-    font-size: 150%;
     margin: auto;
     margin-top: 30px;
     padding: 20px;
@@ -11,4 +10,5 @@
     background-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 2rem 0 rgba(10, 48, 219, 0.61);
     backdrop-filter: blur(5px);
+    cursor: pointer;
 }

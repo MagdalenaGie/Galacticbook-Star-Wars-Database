@@ -1,31 +1,59 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import * as actions from './../../store/actions';
 import ListElement from './ListElement/ListElement';
+import CharacterDetails from './../CharacterDetails/CharacterDetails';
+import Spinner from './../UI/Spinner/Spinner';
+import Button from './../UI/Button/Button';
+import { Route } from "react-router-dom";
 
-const List = () => {
-    const dispatch = useDispatch();
-    useEffect( () => {
-        dispatch(actions.fetchFirstCharacters());
-    }, [dispatch])
+class List extends Component {
+    componentDidMount(){
+        this.props.onFetchFirstCharacters();
+    }
 
-    const charactersList = useSelector(state => state.characters);
-    const page = useSelector(state => state.nextPage);
-    const hasNextPage = useSelector(state => state.hasNext);
+    onClickCharacter = (id) => {
+        this.props.history.push('/characters/' + id);
+    }
 
-    console.log(charactersList);
+    render(){
+        let listToDisplay = <Spinner/>
+        if(this.props.charactersList.length > 0){
+            listToDisplay = this.props.charactersList.map(char => (
+                <ListElement 
+                    name={char.name} 
+                    key={char.url} 
+                    gender={char.gender}
+                    by={char.birth_year}
+                    clicked = {() => this.onClickCharacter(this.props.charactersList.indexOf(char)+1)}
+                />)
+            )
+        }
 
-    const listToDisplay = charactersList.map(char => (
-        <ListElement name={char.name} key={char.url} url={char.url} id={charactersList.indexOf(char)+1}/>
-    ))
+        return(
+            <div className="List">
+                <h1>May the list be with you!</h1>
+                {listToDisplay}
+                {this.props.hasNextPage ? <Button clicked={() => this.props.onFetchNextCharacters(this.props.page, this.props.hasBuffer)}>Load next 5</Button> : null}
+                <Route path={this.props.match.url + "/characters/:id"} component={CharacterDetails}/>
+            </div>
+        )}
+    }
 
-    return(
-        <div className="List">
-            <h1>May the list be with you!</h1>
-            {listToDisplay}
-            {hasNextPage ? <button onClick={() => dispatch(actions.fetchNextCharacters(page))}>GET NEXT</button> : null}
-        </div>
-    )
+const mapStateToProps = state => {
+    return {
+        charactersList: state.characters,
+        page: state.nextPage,
+        hasNextPage: state.hasNext,
+        hasBuffer: state.hasBuffer
+    }
 }
 
-export default List;
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchFirstCharacters: () => dispatch(actions.fetchFirstCharacters()),
+        onFetchNextCharacters: (page, hasBuffer) => dispatch(actions.fetchNextCharacters(page, hasBuffer))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);
