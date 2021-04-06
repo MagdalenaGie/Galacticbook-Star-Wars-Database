@@ -1,13 +1,13 @@
 .Button {
     border: none;
-    margin: 18px;
-    padding: 10px;
+    margin: 12px;
+    padding: 8px;
     border: 2px solid #06ecec;
     border-radius: 5px;
     color: white;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 2rem 0 rgba(10, 48, 219, 0.61);
+    box-shadow: 0 0 1rem 0 rgba(10, 48, 219, 0.61);
     backdrop-filter: blur(5px);
     font-size: 130%;
     outline: none;
@@ -15,7 +15,12 @@
 }
 
 .Button:hover {
-    border-width: 4px;
+    background-color: rgba(255, 255, 255, 0.336);
+    box-shadow: 0 0 2rem 0 rgba(10, 48, 219, 0.74);
+}
+
+.Button:focus{
+    outline: none;
 }
 
 .Button:disabled {

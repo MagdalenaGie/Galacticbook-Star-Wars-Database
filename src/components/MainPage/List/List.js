@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import ListElement from './ListElement/ListElement';
 import Spinner from '../../UI/Spinner/Spinner';
+import Button from '../../UI/Button/Button';
 import {connect} from 'react-redux';
 import * as actions from './../../../store/actions';
 import './List.css';
@@ -15,24 +16,11 @@ import './List.css';
 
 class List extends Component {
 
-    constructor(props){
-        super(props);
-        this.scrollerRef = React.createRef();
-    }
-
     componentDidMount(){
         if(this.props.charactersList.length === 0){
             this.props.onFetchFirstCharacters();
         }
     }
-
-    handleScroll = () => {
-        const scroller = this.scrollerRef.current;
-        console.log(Math.abs(scroller.scrollHeight - scroller.scrollTop), scroller.clientHeight)
-        if (Math.abs(scroller.scrollHeight - scroller.scrollTop) - scroller.clientHeight < 3 && !this.props.isLoading ) {
-            this.props.onFetchNextCharacters(this.props.page, this.props.hasBuffer);
-        }
-      }
 
     sortCharacters = () => {
         if(this.props.sort ==='alphAsc'){
@@ -102,10 +90,13 @@ class List extends Component {
         }
 
         return(
-                <div className="InfiniteScroll" ref={this.scrollerRef} onScroll={this.handleScroll}>
+            <Fragment>
+                <div className="InfiniteScroll">
                     {listToDisplay}
                     {this.props.hasNextPage ? null : <p>End of the list you have reached, my young padawan...</p>}
                 </div>
+                {this.props.hasNextPage ? <Button clicked={()=> this.props.onFetchNextCharacters(this.props.page, this.props.hasBuffer)}>Load next 5</Button> : null}
+            </Fragment>
         )}
     }
 

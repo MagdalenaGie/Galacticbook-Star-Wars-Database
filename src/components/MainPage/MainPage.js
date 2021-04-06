@@ -2,11 +2,17 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as actions from './../../store/actions';
 import List from './List/List';
+import BasicList from './List/BasicList';
+import Button from '../UI/Button/Button';
 import CharacterDetails from './../CharacterDetails/CharacterDetails';
 import { Route } from "react-router-dom";
 import './MainPage.css';
 
 class MainPage extends Component {
+
+    state = { 
+        basic: true
+    }
 
     componentDidMount(){
         this.props.onFetchFilms();
@@ -60,6 +66,11 @@ class MainPage extends Component {
         this.props.onFetchNextCharacters(this.props.page, this.props.hasBuffer);
     }
 
+    onSwitchList = () => {
+        let newView = !this.state.basic;
+        this.setState({basic:newView});
+    }
+
     render(){
         let filmList = null;
         if(this.props.films !== ''){
@@ -70,30 +81,37 @@ class MainPage extends Component {
 
         return(
             <div className="MainPage">
-                <select id="selectSort" onChange={this.onChangeSort} defaultValue="default"> 
+                <Button clicked={this.onSwitchList}>{this.state.basic ? "Enable" : "Disable"}</Button>
+                <select id="selectSort" onChange={this.onChangeSort} defaultValue="default" disabled={this.state.basic}> 
                     <option value="alphAsc" key="alphasc" > By name ascending </option>   
                     <option value="alphDesc" key="alphdesc"> By name descending </option> 
                     <option value="default" key="default" disabled hidden> Sort by </option>
                 </select>
-                <select id="selectSort" onChange={this.onChangeFilterFilm} defaultValue="default"> 
+                <select id="selectSort" onChange={this.onChangeFilterFilm} defaultValue="default" disabled={this.state.basic} > 
                     {filmList}
                     <option value="none" key="none"> Show all</option>
                     <option value="default" key="default" disabled hidden> Filter by film</option>
                 </select>
-                <select id="selectSort" onChange={this.onChangeFilterGender} defaultValue="default"> 
+                <select id="selectSort" onChange={this.onChangeFilterGender} defaultValue="default" disabled={this.state.basic}> 
                     <option value="female" key="female"> female </option>
                     <option value="male" key="male"> male </option>
                     <option value="n/a" key="n/a"> n/a </option>
                     <option value="none" key="none"> Show all </option>
                     <option value="default" key="default" disabled hidden> Filter by gender</option>
                 </select>
-                <div className="InfiniteScroll">
-                    <List
-                        filterFilm={this.props.filterFilm}
-                        filterGender={this.props.filterGender}
-                        sort={this.props.sort} 
-                        onClickCharacter={this.onClickCharacter}
-                    />
+                <div>
+                    {
+                        this.state.basic ? 
+                        <BasicList
+                            onClickCharacter={this.onClickCharacter}
+                        />:
+                        <List
+                            filterFilm={this.props.filterFilm}
+                            filterGender={this.props.filterGender}
+                            sort={this.props.sort} 
+                            onClickCharacter={this.onClickCharacter}
+                        />
+                    }
                 </div>
                 <Route path={this.props.match.url + "/characters/:id"} component={CharacterDetails}/>
             </div>

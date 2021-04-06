@@ -1,21 +1,9 @@
-.InfiniteScroll{
-    overflow: scroll;
-    height:500px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
- /* Hide scrollbar for Chrome, Safari and Opera */
- .InfiniteScroll::-webkit-scrollbar {
-    display: none;
-}
-
 .MainPage select {
     background-color: rgba(255, 255, 255, 0.082);
     box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
     backdrop-filter: blur(5px);
-    margin: 15px;
-    padding: 10px;
+    margin: 12px;
+    padding: 8px;
     border: 2px solid #06ecec;
     border-radius: 5px;
     color: white;
@@ -25,6 +13,11 @@
 
 .MainPage select:hover{
     background-color: rgba(255, 255, 255, 0.164);
+}
+
+.MainPage select:disabled {
+    cursor:unset;
+    background-color: rgba(255, 255, 255, 0.082);
 }
 
 .MainPage option {
