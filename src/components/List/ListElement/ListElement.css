@@ -1,14 +1,24 @@
 .ListElement {
     margin: auto;
     margin-top: 30px;
-    padding: 20px;
+    padding: 10px;
     border: 2px solid #06ecec;
     border-radius: 5px;
     width: 40%;
     color: white;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.082);
     box-shadow: 0 0 2rem 0 rgba(10, 48, 219, 0.61);
     backdrop-filter: blur(5px);
     cursor: pointer;
+}
+
+.ListElementInfo {
+    display: flex;
+    justify-content:space-around;
+}
+
+.ListElement:hover {
+    width: 42%;
+    background-color: rgba(255, 255, 255, 0.164);
 }

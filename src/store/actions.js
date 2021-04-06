@@ -6,6 +6,7 @@ export const fetchFirstCharacters = () => {
         const route = '/people/?page=1';
         axios.get(route)
         .then(res => {
+            dispatch(startLoadingNextCharacters());
             const fetchedData = res.data;
             dispatch(getFirstCharacters(fetchedData));
         })
@@ -22,9 +23,24 @@ export const getFirstCharacters = (characters) => {
     }
 }
 
+export const startLoadingNextCharacters = () => {
+    return {
+        type: actionTypes.START_LOADING_CHARACTERS,
+        isLoading: true
+    }
+}
+
+export const getNextFromBuffer = () => {
+    return {
+        type: actionTypes.GET_NEXT_CHARACTERS_FROM_BUFFER
+    }
+}
+
+
 export const fetchNextCharacters = (page, hasBuffer) => {
     if(!hasBuffer){
         return dispatch => {
+            dispatch(startLoadingNextCharacters());
             const route = '/people/?page=' + page;
             axios.get(route)
             .then(res => {
@@ -36,8 +52,9 @@ export const fetchNextCharacters = (page, hasBuffer) => {
             })
         }
     }else{
-        return {
-            type: actionTypes.GET_NEXT_CHARACTERS_FROM_BUFFER
+        return dispatch => {
+            dispatch(startLoadingNextCharacters());
+            dispatch(getNextFromBuffer());
         }
     }
     

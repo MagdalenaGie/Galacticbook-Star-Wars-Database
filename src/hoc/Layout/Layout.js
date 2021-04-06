@@ -1,11 +1,11 @@
 import React from 'react';
-// import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import lightsaber from './../../assets/lightsaber.png';
 
 const Layout = (props) => {
     return(
         <div>
-            {/* <Toolbar/> */}
-            <main style={{marginTop: "65px"}}>
+            <img src={lightsaber} alt="Might the force be with you!" style={{width: "80%"}}/>
+            <main>
                 {props.children}
             </main>
         </div>
