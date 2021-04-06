@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {Route, Switch} from 'react-router-dom';
 import CharacterDetails from './components/CharacterDetails/CharacterDetails';
-import List from './components/List/List';
+import MainPage from './components/MainPage/MainPage';
 import Layout from './hoc/Layout/Layout';
 
 class App extends Component {
@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <Layout>
         <Switch>
-          <Route exact path="/" component={List} />
+          <Route exact path="/" component={MainPage} />
           <Route path="/characters/:id" component={CharacterDetails}/>
         </Switch>
       </Layout>

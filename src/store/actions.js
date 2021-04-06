@@ -106,3 +106,24 @@ export const getFilms = (films) => {
         films: films
     }
 }
+
+export const setFilterFilm = (filter) => {
+    return {
+        type: actionTypes.SET_FILTER_FILM,
+        filter: filter
+    }
+}
+
+export const setFilterGender = (filter) => {
+    return {
+        type: actionTypes.SET_FILTER_GENDER,
+        filter: filter
+    }
+}
+
+export const setSort = (sort) => {
+    return {
+        type: actionTypes.SET_SORT,
+        sort: sort
+    }
+}

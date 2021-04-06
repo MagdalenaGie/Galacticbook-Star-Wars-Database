@@ -1,0 +1,11 @@
+.InfiniteScroll{
+    overflow: scroll;
+    height:500px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .InfiniteScroll::-webkit-scrollbar {
+    display: none;
+}

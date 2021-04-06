@@ -8,7 +8,10 @@ const initialState = {
     films: '',
     characterData: '',
     hasNext: true,
-    nextPage: 1
+    nextPage: 1,
+    sort: '',
+    filterFilm: 'none',
+    filterGender: 'none'
 }
 
 const updateObject = (oldObject, updatedProperties) => {
@@ -55,7 +58,18 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, {
                 films: [...action.films.results]
             })
-
+        case actionTypes.SET_FILTER_FILM:
+            return updateObject(state, {
+                filterFilm: action.filter
+            })
+        case actionTypes.SET_FILTER_GENDER:
+            return updateObject(state, {
+                filterGender: action.filter
+            })
+        case actionTypes.SET_SORT:
+            return updateObject(state, {
+                sort: action.sort
+            })
         default:
             return state;
     }
